@@ -2,11 +2,64 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 
-class Checkout extends StatelessWidget {
-  const Checkout({super.key});
+class MyWidget2 extends StatefulWidget {
+  const MyWidget2({Key? key}) : super(key: key);
+
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget2> {
+  int _count = 0;
+  double _priceB = 5.00;
+  double _priceP = 15.00;
+
+  void _incrementCount() {
+    setState(() {
+      _count++;
+      _priceB += 5;
+    });
+  }
+
+  void _decrementCount() {
+    setState(() {
+      if (_count > 0) {
+        _count--;
+        _priceB -= 5;
+      }
+    });
+  }
+
+  int _quantity = 1;
+
+  void _incrementQuantity() {
+    setState(() {
+      _quantity++;
+      _priceP += 15;
+    });
+  }
+
+  void _decrementQuantity() {
+    if (_quantity > 0) {
+      setState(() {
+        _quantity--;
+        _priceP -= 15;
+      });
+    }
+  }
+
+  double _subtotal = 0.0;
+  double _total = 0.0;
+
+  void _incrementTotal() {
+    setState(() {
+      _total += _priceB + _priceP; // sem taxa de entrega neste exemplo
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    _total = _priceB + _priceP;
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 245, 244, 244),
       body: Center(
@@ -103,7 +156,7 @@ class Checkout extends StatelessWidget {
                                       color: Color.fromARGB(255, 217, 184, 243),
                                     ),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: _decrementCount,
                                       child: const Icon(
                                         Icons.remove,
                                         color: Colors.black,
@@ -118,7 +171,7 @@ class Checkout extends StatelessWidget {
                                     color: Color.fromARGB(255, 172, 86, 241),
                                   ),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: _incrementCount,
                                     child: const Icon(
                                       Icons.add,
                                       color: Colors.white,
@@ -139,21 +192,21 @@ class Checkout extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 7),
                               child: Row(
-                                children: const [
+                                children: [
                                   Text(
-                                    '80 pc',
-                                    style: TextStyle(
+                                    '${_count + 1} pc',
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
                                       color: Color.fromARGB(255, 0, 0, 0),
                                     ),
                                   ),
-                                  SizedBox(width: 16),
+                                  const SizedBox(width: 16),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 120),
+                                    padding: const EdgeInsets.only(left: 120),
                                     child: Text(
-                                      '\$160.00',
-                                      style: TextStyle(
+                                      '\$${_priceB.toStringAsFixed(2)}',
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                         color: Color.fromARGB(255, 0, 0, 0),
@@ -218,7 +271,7 @@ class Checkout extends StatelessWidget {
                                       color: Color.fromARGB(255, 217, 184, 243),
                                     ),
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: _decrementQuantity,
                                       child: const Icon(Icons.remove,
                                           color: Colors.black),
                                     ),
@@ -231,7 +284,7 @@ class Checkout extends StatelessWidget {
                                     color: Color.fromARGB(255, 172, 86, 241),
                                   ),
                                   child: InkWell(
-                                    onTap: () {},
+                                    onTap: _incrementQuantity,
                                     child: const Icon(
                                       Icons.add,
                                       color: Colors.white,
@@ -252,21 +305,21 @@ class Checkout extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 7),
                               child: Row(
-                                children: const [
+                                children: [
                                   Text(
-                                    '4 KG',
-                                    style: TextStyle(
+                                    '${_quantity} KG',
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
                                       color: Color.fromARGB(255, 0, 0, 0),
                                     ),
                                   ),
-                                  SizedBox(width: 16),
+                                  const SizedBox(width: 16),
                                   Padding(
-                                    padding: EdgeInsets.only(left: 120),
+                                    padding: const EdgeInsets.only(left: 120),
                                     child: Text(
-                                      '\$150.00',
-                                      style: TextStyle(
+                                      '\$${15.00 * _quantity}',
+                                      style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w600,
                                         color: Color.fromARGB(255, 0, 0, 0),
@@ -348,8 +401,8 @@ class Checkout extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'Subtotal',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -357,8 +410,8 @@ class Checkout extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '\$220.00',
-                                    style: TextStyle(
+                                    '$_total',
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -390,8 +443,8 @@ class Checkout extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  Text(
+                                children: [
+                                  const Text(
                                     'Total',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -399,8 +452,8 @@ class Checkout extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    '\$220.00',
-                                    style: TextStyle(
+                                    '$_total',
+                                    style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),

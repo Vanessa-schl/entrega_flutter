@@ -98,7 +98,7 @@ class Entrega2 extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return Entrega();
+                      return MyWidget();
                     },
                   ),
                 );

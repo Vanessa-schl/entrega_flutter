@@ -1,8 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:entrega_flutter/pages/checkout.dart';
 
-class Entrega extends StatelessWidget {
-  const Entrega({super.key});
+class MyWidget extends StatefulWidget {
+  const MyWidget({Key? key}) : super(key: key);
+
+  @override
+  _MyWidgetState createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  int _counter = 2;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  void _decrementCounter() {
+    setState(() {
+      _counter--;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +76,7 @@ class Entrega extends StatelessWidget {
                     ),
                     Container(
                       width: 140,
-                      margin: EdgeInsets.symmetric(vertical: 14),
+                      margin: const EdgeInsets.symmetric(vertical: 14),
                       padding: const EdgeInsets.all(7),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -73,20 +92,61 @@ class Entrega extends StatelessWidget {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          Text(
-                            '-',
-                            style: TextStyle(fontSize: 34),
+                        children: [
+                          ClipOval(
+                            child: Material(
+                              color: const Color.fromARGB(255, 255, 255,
+                                  255), // cor de fundo do botão "-"
+                              child: InkWell(
+                                onTap: _decrementCounter,
+                                child: const SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: Text(
+                                      '-',
+                                      style: TextStyle(
+                                        fontSize:
+                                            35, // tamanho da fonte do botão "-"
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           CircleAvatar(
-                            backgroundColor: Color.fromARGB(255, 241, 170, 224),
-                            child: Text('2',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 25)),
+                            backgroundColor: const Color.fromARGB(255, 241, 170,
+                                224), // cor de fundo do CircleAvatar
+                            child: Text(
+                              '$_counter',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
+                            ),
                           ),
-                          Text(
-                            '+',
-                            style: TextStyle(fontSize: 22),
+                          ClipOval(
+                            child: Material(
+                              color: const Color.fromARGB(255, 255, 255,
+                                  255), // cor de fundo do botão "+"
+                              child: InkWell(
+                                onTap: _incrementCounter,
+                                child: const SizedBox(
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: Text(
+                                      '+',
+                                      style: TextStyle(
+                                        fontSize:
+                                            20, // tamanho da fonte do botão "+"
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -98,7 +158,8 @@ class Entrega extends StatelessWidget {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
+                            color: Color.fromARGB(255, 255, 255, 255)
+                                .withOpacity(0.5),
                             spreadRadius: 2,
                             blurRadius: 5,
                             offset: Offset(0, 3), // changes position of shadow
@@ -294,7 +355,7 @@ class Entrega extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) {
-                                        return Checkout();
+                                        return MyWidget2();
                                       },
                                     ),
                                   );
