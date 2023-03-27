@@ -379,7 +379,105 @@ class _MyWidgetState extends State<MyWidget2> {
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      String codigoInserido = '';
+                                      return AlertDialog(
+                                        title: const Text(
+                                            'Put your promo code here'),
+                                        content: TextField(
+                                          decoration: const InputDecoration(
+                                            border: OutlineInputBorder(),
+                                            labelText: 'Promo Code',
+                                          ),
+                                          onChanged: ((value) {
+                                            codigoInserido = value;
+                                          }),
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text(
+                                              'Cancel',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          ),
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              if (codigoInserido == 'Pulsati' ||
+                                                  codigoInserido == 'a') {
+                                                setState(() {
+                                                  _total = _total * 0.2;
+                                                });
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: const Text(
+                                                          'Promo Code Applied',
+                                                          style: TextStyle(
+                                                            color: Colors.green,
+                                                          ),
+                                                        ),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: const Text(
+                                                                'Ok'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              } else {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                        'Invalid Promo Code',
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child:
+                                                              const Text('Ok'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              }
+                                            },
+                                            child: const Text(
+                                              'Apply',
+                                              style: TextStyle(
+                                                  color: Colors.green),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor:
                                         Color.fromARGB(255, 177, 106, 224)),
